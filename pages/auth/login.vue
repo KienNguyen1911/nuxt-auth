@@ -1,17 +1,31 @@
-<template>
-  <div class="grid h-screen place-items-center min-h-screen">
-    <UCard>
+<script setup lang="ts">
+const supabase = useSupabaseClient();
+const email = ref("");
 
-      <h1 class="text-cyan-700">Hello Login</h1>
-      <UButton label="Sign in with Github" />
-    </UCard>
+const signInWithOtp = async () => {
+  const { error } = await supabase.auth.signInWithOtp({
+    email: email.value,
+    options: {
+      emailRedirectTo: "http://localhost:3000/auth/confirm"
+    }
+  });
+  if (error) console.log(error);
+};
+
+const signInWithOAuth = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: {
+      redirectTo: 'http://localhost:3000/auth/confirm',
+    },
+  })
+  if (error) console.log(error)
+}
+</script>
+<template>
+  <div>
+    <button @click="signInWithOtp">Sign In with E-Mail</button>
+    <input v-model="email" type="email" />
+    <button @click="signInWithOAuth">Sign In with GitHub</button>
   </div>
 </template>
-
-<script lang="ts" setup>
-
-</script>
-
-<style>
-
-</style>
