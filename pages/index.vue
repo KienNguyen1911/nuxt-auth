@@ -7,7 +7,9 @@
 
 <script lang="ts" setup>
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
+  layout: 'default',
+  title: 'Home',
 })
 const client = useSupabaseClient()
 const user = useSupabaseUser()
