@@ -13,11 +13,19 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/ui", "@nuxtjs/supabase"],
   css: ["@/assets/css/main.css"],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
   supabase: {
     redirectOptions: {
       login: '/auth/login',
       callback: '/auth/confirm',
-      exclude: [],
+      exclude: [
+        '/docs'
+      ],
     }
   }
 })
